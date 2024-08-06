@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom"
+import { patchArticleVotesById } from "../api"
 
-const ArticlePreview = ({ article }) => {
+const ArticlePreview = ({ article, setArticles }) => {
+
     const {
         article_id,
         title,
@@ -11,6 +13,29 @@ const ArticlePreview = ({ article }) => {
         comment_count
     } = article
 
+
+    const handleVote = (increment) => {
+        setArticles(articles => {
+            return articles.map(article => {
+                if (article.article_id === article_id) {
+                    return { ...article, votes: article.votes + increment }
+                }
+                else return article
+            })
+        })
+        patchArticleVotesById(article_id, increment)
+            .catch(() => { // TODO maybe make the arrow go red for a second somehow
+                setArticles(articles => {
+                    return articles.map(article => {
+                        if (article.article_id === article_id) {
+                            return { ...article, votes: article.votes - increment }
+                        }
+                        else return article
+                    })
+                })
+            })
+    }
+
     const formattedDate = new Date(created_at).toLocaleString()
 
     return (
@@ -19,7 +44,11 @@ const ArticlePreview = ({ article }) => {
             <div className="article-preview__details">
                 <span>{topic}</span>
                 <span>{author}</span>
-                <span>votes: {votes}</span>
+                <span>
+                    <button className="vote-arrow" onClick={() => handleVote(+1)}>⇧</button>
+                    <span>{votes}</span>
+                    <button className="vote-arrow" onClick={() => handleVote(-1)}>⇩</button>
+                </span>
                 <span>comments: {comment_count}</span>
                 <span>{formattedDate}</span>
             </div>

@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react"
 
-const useCreateResource = apiFunctions => {
+const useCreateResource = apiFunction => {
     const [data, setData] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)
 
     useEffect(() => {
-        Promise.all(apiFunctions.map(fn => fn()))
-            .then(responses => {
-                setData(responses)
+        apiFunction()
+            .then(response => {
+                setData(response)
             })
             .catch(err => {
                 if (err.response) setError(err.response.data)

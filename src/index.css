@@ -40,3 +40,9 @@ nav ul {
   display: flex;
   justify-content: space-between;
 }
+
+/* Elements */
+
+.vote-arrow:hover {
+  cursor: pointer;
+}
