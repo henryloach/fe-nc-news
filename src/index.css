@@ -33,3 +33,10 @@ nav ul {
   list-style: none;
   padding: 0;
 }
+
+/* Comment */
+
+.comment-details {
+  display: flex;
+  justify-content: space-between;
+}

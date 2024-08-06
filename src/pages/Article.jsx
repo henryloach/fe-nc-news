@@ -6,6 +6,7 @@ import Comment from "../components/Comment"
 const Article = () => {
     const { article_id } = useParams()
 
+    // Toto - perhaps change this back to the custom hook fetching just one resource and use it twice
     const { data, isLoading, error } =
         useCreateResource([
             () => getArticleById(article_id),
@@ -29,6 +30,8 @@ const Article = () => {
     } = article
 
     const formattedDate = new Date(created_at).toLocaleString()
+
+    // TODO conditionaly render something if comments.length is zero
 
     return (
         <div>

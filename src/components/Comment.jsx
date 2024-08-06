@@ -1,20 +1,23 @@
-const Comment = ({ comment }) => {
+const Comment = ({ comment, commentVotes, setCommentVotes }) => {
 
     const {
         body,
         author,
-        votes,
-        created_at
+        created_at,
+        votes
     } = comment
 
     const formattedDate = new Date(created_at).toLocaleString()
 
     return (
         <>
-            <span>{author}</span>
             <p>{body}</p>
-            <span>{votes}</span>
-            <span>{created_at}</span>
+            <div className="comment-details">
+                <span>{author}</span>
+                <span onClick={() => {}}>⇧</span>
+                <span>{votes}</span>
+                <span>{created_at}</span>
+            </div>
         </>
     )
 }
