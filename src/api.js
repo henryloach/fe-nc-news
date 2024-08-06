@@ -25,3 +25,25 @@ export const getCommentsByArticleId = article_id => {
             return response.data.comments
         })
 }
+
+export const patchCommentVotesById = (comment_id, increment) => {
+    const requestBody = {
+        inc_votes: increment
+    }
+
+    return apiClient.patch(`/comments/${comment_id}`, requestBody)
+        .then(response => {
+            return response.data.comment
+        })
+}
+
+export const patchArticleVotesById = (article_id, increment) => {
+    const requestBody = {
+        inc_votes: increment
+    }
+
+    return apiClient.patch(`/articles/${article_id}`, requestBody)
+        .then(response => {
+            return response.data.article
+        })
+}

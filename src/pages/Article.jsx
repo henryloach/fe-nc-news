@@ -1,21 +1,43 @@
 import useCreateResource from "../hooks/useCreateResource"
 import { useParams } from "react-router-dom"
-import { getArticleById, getCommentsByArticleId } from "../api"
+import { getArticleById, getCommentsByArticleId, patchArticleVotesById } from "../api"
 import Comment from "../components/Comment"
+import Votes from "../components/Votes"
 
 const Article = () => {
     const { article_id } = useParams()
 
-    const { data, isLoading, error } =
-        useCreateResource([
-            () => getArticleById(article_id),
-            () => getCommentsByArticleId(article_id)
-        ])
+    const {
+        data: article,
+        setData: setArticle,
+        isLoading: isArticleLoading,
+        error: articleError
+    } = useCreateResource(() => getArticleById(article_id))
 
-    if (isLoading) return <p>Loading...</p>
-    if (error) return <p>Error: {error.message}</p>
+    const {
+        data: comments,
+        setData: setComments,
+        isLoading: areCommentsLoading,
+        error: commentsError
+    } = useCreateResource(() => getCommentsByArticleId(article_id))
 
-    const [article, comments] = data
+    const handleVote = (increment) => {
+        setArticle(article => {
+            return { ...article, votes: article.votes + increment }
+        })
+        patchArticleVotesById(article_id, increment)
+            .catch(() => { // TODO maybe make the arrow go red for a second somehow
+                setArticle(article => {
+                    return { ...article, votes: article.votes - increment }
+                })
+            })
+    }
+
+    // TODO refactor conditional rendering
+    if (isArticleLoading) return <p>Loading...</p>
+    if (areCommentsLoading) return <p>Loading...</p>
+    if (articleError) return <p>Error: {articleError.message}</p>
+    if (commentsError) return <p>Error: {commentsError.message}</p>
 
     const {
         title,
@@ -30,26 +52,28 @@ const Article = () => {
 
     const formattedDate = new Date(created_at).toLocaleString()
 
+
     return (
         <div>
             <div>
                 <img src={article_img_url} alt="article-image" />
                 <h2>{title}</h2>
-                <div className="article-preview__details">
+                <div className="article-details">
                     <span>{topic}</span>
                     <span>{author}</span>
-                    <span>votes: {votes}</span>
+                    <Votes votes={votes} handleVote={handleVote}/>
                     <span>comments: {comment_count}</span>
                     <span>{formattedDate}</span>
                 </div>
                 <p>{body}</p>
             </div>
             <div className="comments">
+                <h3>Comments:</h3>
                 <ul>
                     {comments.map(comment => {
                         return <li key={comment.comment_id}>
                             <hr />
-                            <Comment comment={comment} />
+                            <Comment comment={comment} setComments={setComments} />
                         </li>
                     })}
                 </ul>
