@@ -1,13 +1,15 @@
 import useCreateResource from "../hooks/useCreateResource";
-import { getArticles } from "../api";
 import ArticlePreview from "../components/ArticlePreview";
+import { getArticles } from "../api";
 
 const Articles = () => {
 
-    const { data: articles, isLoading, error } = useCreateResource(getArticles)
+    const { data, isLoading, error } = useCreateResource([getArticles])
 
     if (isLoading) return <p>Loading...</p>
-    if (error) return <p>Error: {error.msg}</p>
+    if (error) return <p>Error: {error.message}</p>
+
+    const [articles] = data
 
     return (
         <div className="article-page">
@@ -16,7 +18,7 @@ const Articles = () => {
                 {articles.map(article => {
                     return <li key={article.article_id}>
                         <hr />
-                        <ArticlePreview article={article}/>
+                        <ArticlePreview article={article} />
                     </li>
                 })}
             </ul>
