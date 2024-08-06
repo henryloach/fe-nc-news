@@ -1,18 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
 
-const useCreateResource = apiFunction => {
-    console.log("fromHook")
-    const [data, setData] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
+const useCreateResource = apiFunctions => {
+    const [data, setData] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
+    const [error, setError] = useState(null)
 
     useEffect(() => {
-        apiFunction()
-            .then(data => {
-                setData(data)
+        Promise.all(apiFunctions.map(fn => fn()))
+            .then(responses => {
+                setData(responses)
             })
             .catch(err => {
-                setError(err.response.data)
+                if (err.response) setError(err.response.data)
+                else setError({ message: "No response: Server is probably warming up. This could take up to a minute..." })
             })
             .finally(() => {
                 setIsLoading(false)

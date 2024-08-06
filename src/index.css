@@ -8,7 +8,7 @@ nav ul {
 
 /* Articles */
 
-.article-page>ul {
+.article-page > ul {
   list-style: none;
   padding: 0;
 }
@@ -25,4 +25,11 @@ nav ul {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+}
+
+/* Comments */
+
+.comments ul {
+  list-style: none;
+  padding: 0;
 }
