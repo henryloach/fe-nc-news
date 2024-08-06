@@ -44,7 +44,7 @@ const ArticlePreview = ({ article, setArticles }) => {
             <div className="article-details">
                 <span>{topic}</span>
                 <span>{author}</span>
-                <Votes votes={votes} handleVote={handleVote}/>
+                <Votes votes={votes} forceNoButtons={true}/>
                 <span>comments: {comment_count}</span>
                 <span>{formattedDate}</span>
             </div>
