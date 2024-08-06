@@ -47,3 +47,11 @@ export const patchArticleVotesById = (article_id, increment) => {
             return response.data.article
         })
 }
+
+export const postCommentByArticleId = (article_id, requestBody) => {
+    return apiClient.post(`/articles/${article_id}/comments`, requestBody)
+        .then(response => {
+            // TODO - backend API file example res. don't have the newComment key 
+            return response.data.newComment
+        })
+}

@@ -41,6 +41,13 @@ nav ul {
   justify-content: space-between;
 }
 
+/* CommentForm */
+
+.comment-form input {
+  display: block;
+  width :100%
+}
+
 /* Elements */
 
 .vote-arrow:hover {
