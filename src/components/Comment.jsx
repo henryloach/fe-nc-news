@@ -42,7 +42,7 @@ const Comment = ({ comment, setComments }) => {
             <div className="comment-details">
                 <span>{author}</span>
                 <Votes votes={votes} handleVote={handleVote}/>
-                <span>{created_at}</span>
+                <span>{formattedDate}</span>
             </div>
         </>
     )

@@ -1,11 +1,15 @@
 import useCreateResource from "../hooks/useCreateResource"
+import { useState } from "react"
 import { useParams } from "react-router-dom"
 import { getArticleById, getCommentsByArticleId, patchArticleVotesById } from "../api"
 import Comment from "../components/Comment"
 import Votes from "../components/Votes"
+import CommentForm from "../components/CommentForm"
 
 const Article = () => {
     const { article_id } = useParams()
+
+    const [showCommentForm, setShowCommentForm] = useState(false)
 
     const {
         data: article,
@@ -61,14 +65,17 @@ const Article = () => {
                 <div className="article-details">
                     <span>{topic}</span>
                     <span>{author}</span>
-                    <Votes votes={votes} handleVote={handleVote}/>
+                    <Votes votes={votes} handleVote={handleVote} />
                     <span>comments: {comment_count}</span>
                     <span>{formattedDate}</span>
                 </div>
                 <p>{body}</p>
             </div>
+
             <div className="comments">
                 <h3>Comments:</h3>
+                <button onClick={() => setShowCommentForm(state => !state)}> Post New Comment </button>
+                {showCommentForm && <CommentForm setShowCommentForm={setShowCommentForm} setComments={setComments} article_id={article_id}/>}
                 <ul>
                     {comments.map(comment => {
                         return <li key={comment.comment_id}>
