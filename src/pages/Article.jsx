@@ -1,13 +1,16 @@
 import useCreateResource from "../hooks/useCreateResource"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { useParams } from "react-router-dom"
 import { getArticleById, getCommentsByArticleId, patchArticleVotesById } from "../api"
 import Comment from "../components/Comment"
 import Votes from "../components/Votes"
 import CommentForm from "../components/CommentForm"
+import { UserContext } from "../contexts/User"
 
 const Article = () => {
     const { article_id } = useParams()
+
+    const { loggedInUser } = useContext(UserContext)
 
     const [showCommentForm, setShowCommentForm] = useState(false)
 
@@ -56,7 +59,6 @@ const Article = () => {
 
     const formattedDate = new Date(created_at).toLocaleString()
 
-
     return (
         <div>
             <div>
@@ -65,7 +67,10 @@ const Article = () => {
                 <div className="article-details">
                     <span>{topic}</span>
                     <span>{author}</span>
-                    <Votes votes={votes} handleVote={handleVote} />
+                    {author === loggedInUser
+                        ? <button>Delete</button>
+                        : <Votes votes={votes} handleVote={handleVote} />
+                    }
                     <span>comments: {comment_count}</span>
                     <span>{formattedDate}</span>
                 </div>
@@ -75,7 +80,8 @@ const Article = () => {
             <div className="comments">
                 <h3>Comments:</h3>
                 <button onClick={() => setShowCommentForm(state => !state)}> Post New Comment </button>
-                {showCommentForm && <CommentForm setShowCommentForm={setShowCommentForm} setComments={setComments} article_id={article_id}/>}
+                {showCommentForm && <CommentForm setShowCommentForm={setShowCommentForm} setComments={setComments} article_id={article_id} />}
+                {!comments.length && <p>No comments to display...</p>} 
                 <ul>
                     {comments.map(comment => {
                         return <li key={comment.comment_id}>

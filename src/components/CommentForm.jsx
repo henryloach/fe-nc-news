@@ -12,13 +12,15 @@ const CommentForm = ({ setShowCommentForm, setComments, article_id }) => {
         const formData = new FormData(event.target)
         const body = formData.get("comment")
         setCommentPostError(false)
+        if (body === "") return
+        setShowCommentForm(false)
         postCommentByArticleId(article_id, { username, body })
             .then(newComment => {
-                setShowCommentForm(false)
                 setComments(comments => [newComment, ...comments])
             })
             .catch(err => {
                 setCommentPostError(true)
+                setShowCommentForm(true)
             })
     }
 
