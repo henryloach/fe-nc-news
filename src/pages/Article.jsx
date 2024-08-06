@@ -2,6 +2,7 @@ import useCreateResource from "../hooks/useCreateResource"
 import { useParams } from "react-router-dom"
 import { getArticleById, getCommentsByArticleId, patchArticleVotesById } from "../api"
 import Comment from "../components/Comment"
+import Votes from "../components/Votes"
 
 const Article = () => {
     const { article_id } = useParams()
@@ -57,14 +58,10 @@ const Article = () => {
             <div>
                 <img src={article_img_url} alt="article-image" />
                 <h2>{title}</h2>
-                <div className="article-preview__details">
+                <div className="article-details">
                     <span>{topic}</span>
                     <span>{author}</span>
-                    <span>
-                        <button className="vote-arrow" onClick={() => handleVote(+1)}>⇧</button>
-                        <span>{votes}</span>
-                        <button className="vote-arrow" onClick={() => handleVote(-1)}>⇩</button>
-                    </span>
+                    <Votes votes={votes} handleVote={handleVote}/>
                     <span>comments: {comment_count}</span>
                     <span>{formattedDate}</span>
                 </div>

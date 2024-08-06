@@ -1,4 +1,5 @@
 import { patchCommentVotesById } from "../api"
+import Votes from "./Votes"
 
 const Comment = ({ comment, setComments }) => {
 
@@ -40,11 +41,7 @@ const Comment = ({ comment, setComments }) => {
             <p>{body}</p>
             <div className="comment-details">
                 <span>{author}</span>
-                <span>
-                    <button className="vote-arrow" onClick={() => handleVote(+1)}>⇧</button>
-                    <span>{votes}</span>
-                    <button className="vote-arrow" onClick={() => handleVote(-1)}>⇩</button>
-                </span>
+                <Votes votes={votes} handleVote={handleVote}/>
                 <span>{created_at}</span>
             </div>
         </>

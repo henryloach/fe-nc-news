@@ -20,7 +20,7 @@ nav ul {
   grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
 }
 
-.article-preview__details {
+.article-details {
   display: flex;
   justify-content: space-between;
   align-items: center;

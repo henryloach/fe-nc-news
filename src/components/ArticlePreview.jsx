@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import { patchArticleVotesById } from "../api"
+import Votes from "./Votes"
 
 const ArticlePreview = ({ article, setArticles }) => {
 
@@ -12,7 +13,6 @@ const ArticlePreview = ({ article, setArticles }) => {
         votes,
         comment_count
     } = article
-
 
     const handleVote = (increment) => {
         setArticles(articles => {
@@ -41,14 +41,10 @@ const ArticlePreview = ({ article, setArticles }) => {
     return (
         <div className="article-preview">
             <h3><Link to={`/articles/${article_id}`}>{title}</Link></h3>
-            <div className="article-preview__details">
+            <div className="article-details">
                 <span>{topic}</span>
                 <span>{author}</span>
-                <span>
-                    <button className="vote-arrow" onClick={() => handleVote(+1)}>⇧</button>
-                    <span>{votes}</span>
-                    <button className="vote-arrow" onClick={() => handleVote(-1)}>⇩</button>
-                </span>
+                <Votes votes={votes} handleVote={handleVote}/>
                 <span>comments: {comment_count}</span>
                 <span>{formattedDate}</span>
             </div>
