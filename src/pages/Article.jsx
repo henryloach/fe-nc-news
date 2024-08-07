@@ -1,7 +1,7 @@
 import useCreateResource from "../hooks/useCreateResource"
 import {  useState } from "react"
 import { useParams } from "react-router-dom"
-import { getArticleById, getCommentsByArticleId, patchArticleVotesById } from "../api"
+import { getArticleById, getCommentsByArticleId } from "../api"
 import Comment from "../components/Comment"
 import Votes from "../components/Votes"
 import CommentForm from "../components/CommentForm"

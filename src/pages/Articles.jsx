@@ -1,7 +1,6 @@
 import useCreateResource from "../hooks/useCreateResource";
 import ArticlePreview from "../components/ArticlePreview";
 import { getArticles } from "../api";
-import { useState } from "react";
 
 const Articles = ({urlQuery}) => {
 
