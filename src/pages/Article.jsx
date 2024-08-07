@@ -65,7 +65,10 @@ const Article = () => {
                     <span>{topic}</span>
                     <span>{author}</span>
                     <Votes votes={votes} handleVote={handleVote} author={author} />
-                    <span>comments: {comments.length}</span>
+                    {/* TODO comments.length changed dynamically 
+                    on post/delete comments but it's
+                    but it's the paginated comments not the total */}
+                    <span>comments: {comments.length} </span> 
                     <span>{formattedDate}</span>
                 </div>
                 <p>{body}</p>
@@ -73,7 +76,9 @@ const Article = () => {
 
             <div className="comments">
                 <h3>Comments:</h3>
-                <button onClick={() => setShowCommentForm(state => !state)}> Post New Comment </button>
+                <button onClick={() => setShowCommentForm(state => !state)}> 
+                    {showCommentForm ? "Back" : "Post New Comment"} 
+                    </button>
                 {showCommentForm && <CommentForm setShowCommentForm={setShowCommentForm} setComments={setComments} article_id={article_id} />}
                 {!comments.length && <p>No comments to display...</p>}
                 <ul>

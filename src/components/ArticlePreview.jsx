@@ -11,6 +11,7 @@ const ArticlePreview = ({ article, setArticles }) => {
         author,
         created_at,
         votes,
+        article_img_url,
         comment_count
     } = article
 
@@ -41,6 +42,7 @@ const ArticlePreview = ({ article, setArticles }) => {
     return (
         <div className="article-preview">
             <h3><Link to={`/articles/${article_id}`}>{title}</Link></h3>
+            <img src={article_img_url} alt="article-preview-image"/>
             <div className="article-details">
                 <span>{topic}</span>
                 <span>{author}</span>
