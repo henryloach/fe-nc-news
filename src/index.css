@@ -18,7 +18,12 @@ nav ul {
 .article-preview {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+
+  & img {
+    width: 150px;
+  }
 }
+
 
 .article-details {
   display: flex;

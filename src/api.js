@@ -55,3 +55,7 @@ export const postCommentByArticleId = (article_id, requestBody) => {
             return response.data.newComment
         })
 }
+
+export const deleteCommentById = comment_id => {
+    return apiClient.delete(`/comments/${comment_id}`)
+}

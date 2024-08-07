@@ -1,4 +1,4 @@
-import { patchCommentVotesById } from "../api"
+import Delete from "./Delete"
 import Votes from "./Votes"
 
 const Comment = ({ comment, setComments }) => {
@@ -11,29 +11,6 @@ const Comment = ({ comment, setComments }) => {
         votes
     } = comment
 
-    const handleVote = (increment) => {
-        setComments(comments => {
-            return comments.map(comment => {
-                if (comment.comment_id === comment_id) {
-                    return { ...comment, votes: comment.votes + increment }
-                }
-                else return comment
-            })
-        })
-        patchCommentVotesById(comment_id, increment)
-            .catch(() => { // TODO maybe make the arrow go red for a second somehow
-                setComments(comments => {
-                    return comments.map(comment => {
-                        if (comment.comment_id === comment_id) {
-                            return { ...comment, votes: comment.votes - increment }
-                        }
-                        else return comment
-                    })
-                })
-            })
-
-    }
-
     const formattedDate = new Date(created_at).toLocaleString()
 
     return (
@@ -41,7 +18,18 @@ const Comment = ({ comment, setComments }) => {
             <p>{body}</p>
             <div className="comment-details">
                 <span>{author}</span>
-                <Votes votes={votes} handleVote={handleVote}/>
+                <Votes
+                    votes={votes}
+                    setComments={setComments}
+                    author={author}
+                    comment_id={comment_id}
+                />
+                <Delete
+                    comment={comment}
+                    setComments={setComments}
+                    author={author}
+                    comment_id={comment_id}
+                />
                 <span>{formattedDate}</span>
             </div>
         </>

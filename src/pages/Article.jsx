@@ -1,5 +1,5 @@
 import useCreateResource from "../hooks/useCreateResource"
-import { useState } from "react"
+import {  useState } from "react"
 import { useParams } from "react-router-dom"
 import { getArticleById, getCommentsByArticleId, patchArticleVotesById } from "../api"
 import Comment from "../components/Comment"
@@ -56,7 +56,6 @@ const Article = () => {
 
     const formattedDate = new Date(created_at).toLocaleString()
 
-
     return (
         <div>
             <div>
@@ -65,8 +64,11 @@ const Article = () => {
                 <div className="article-details">
                     <span>{topic}</span>
                     <span>{author}</span>
-                    <Votes votes={votes} handleVote={handleVote} />
-                    <span>comments: {comment_count}</span>
+                    <Votes votes={votes} handleVote={handleVote} author={author} />
+                    {/* TODO comments.length changed dynamically 
+                    on post/delete comments but it's
+                    but it's the paginated comments not the total */}
+                    <span>comments: {comments.length} </span> 
                     <span>{formattedDate}</span>
                 </div>
                 <p>{body}</p>
@@ -74,8 +76,11 @@ const Article = () => {
 
             <div className="comments">
                 <h3>Comments:</h3>
-                <button onClick={() => setShowCommentForm(state => !state)}> Post New Comment </button>
-                {showCommentForm && <CommentForm setShowCommentForm={setShowCommentForm} setComments={setComments} article_id={article_id}/>}
+                <button onClick={() => setShowCommentForm(state => !state)}> 
+                    {showCommentForm ? "Back" : "Post New Comment"} 
+                    </button>
+                {showCommentForm && <CommentForm setShowCommentForm={setShowCommentForm} setComments={setComments} article_id={article_id} />}
+                {!comments.length && <p>No comments to display...</p>}
                 <ul>
                     {comments.map(comment => {
                         return <li key={comment.comment_id}>
