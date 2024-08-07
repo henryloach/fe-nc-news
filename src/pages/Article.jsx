@@ -25,18 +25,6 @@ const Article = () => {
         error: commentsError
     } = useCreateResource(() => getCommentsByArticleId(article_id))
 
-    const handleVote = (increment) => {
-        setArticle(article => {
-            return { ...article, votes: article.votes + increment }
-        })
-        patchArticleVotesById(article_id, increment)
-            .catch(() => { // TODO maybe make the arrow go red for a second somehow
-                setArticle(article => {
-                    return { ...article, votes: article.votes - increment }
-                })
-            })
-    }
-
     // TODO refactor conditional rendering
     if (isArticleLoading) return <p>Loading...</p>
     if (areCommentsLoading) return <p>Loading...</p>
@@ -64,7 +52,7 @@ const Article = () => {
                 <div className="article-details">
                     <span>{topic}</span>
                     <span>{author}</span>
-                    <Votes votes={votes} handleVote={handleVote} author={author} />
+                    <Votes votes={votes} setArticle={setArticle} author={author} article_id={article_id}/>
                     {/* TODO comments.length changed dynamically 
                     on post/delete comments but it's
                     but it's the paginated comments not the total */}
