@@ -5,10 +5,22 @@ const apiClient = axios.create({
     timeout: 1000
 })
 
-export const getArticles = () => {
-    return apiClient.get("/articles")
+export const getArticles = (urlQuery) => {
+    const queryString =
+        Object.entries(urlQuery)
+            .map(([field, value]) => `${field}=${value}`)
+            .join('&')
+
+    return apiClient.get(`/articles?${queryString}`)
         .then(response => {
             return response.data.articles
+        })
+}
+
+export const getTopics = () => {
+    return apiClient.get("/topics")
+        .then(response => {
+            return response.data.topics
         })
 }
 

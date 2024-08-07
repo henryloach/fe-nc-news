@@ -6,7 +6,7 @@ const Header = () => {
             <nav>
                 <ul>
                     <li><Link to="/">Home</Link></li>
-                    <li>Topics</li>
+                    <li><Link to="/topics">Topics</Link></li>
                     <li><Link to="/articles">Articles</Link></li>
                     <li>Login</li>
                     <li>Sign Up</li>
