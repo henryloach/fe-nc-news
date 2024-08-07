@@ -65,7 +65,7 @@ const Article = () => {
                     <span>{topic}</span>
                     <span>{author}</span>
                     <Votes votes={votes} handleVote={handleVote} author={author} />
-                    <span>comments: {comment_count}</span>
+                    <span>comments: {comments.length}</span>
                     <span>{formattedDate}</span>
                 </div>
                 <p>{body}</p>
