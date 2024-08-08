@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { UserContext } from "../contexts/User"
 import { patchArticleVotesById, patchCommentVotesById } from "../api"
 
@@ -6,7 +6,49 @@ const Votes = ({ votes, setComments, setArticle, author, forceNoButtons, comment
 
     const { loggedInUser } = useContext(UserContext)
 
+    const [submittedVote, setSubmittedVote] = useState(0)
+
+    const [upButtonStyle, setUpButtonStyle] = useState({})
+    const [downButtonStyle, setDownButtonStyle] = useState({})
+
+    const styleSuccess = (increment) => {
+        if (increment === 1) {
+            setUpButtonStyle({ backgroundColor: "blue", color: "white" })
+            setTimeout(() => {
+                setUpButtonStyle({})
+            }, 150)
+        }
+
+        if (increment === -1) {
+            setDownButtonStyle({ backgroundColor: "blue", color: "white" })
+            setTimeout(() => {
+                setDownButtonStyle({})
+            }, 150)
+        }
+    }
+
+    const styleFail = (increment) => {
+        if (increment === 1) {
+            setUpButtonStyle({ backgroundColor: "red", color: "white" })
+            setTimeout(() => {
+                setUpButtonStyle({})
+            }, 150)
+        }
+
+        if (increment === -1) {
+            setDownButtonStyle({ backgroundColor: "red", color: "white" })
+            setTimeout(() => {
+                setDownButtonStyle({})
+            }, 150)
+        }
+    }
+
     const handleCommentVote = (increment) => {
+
+        styleSuccess(increment)
+
+        setSubmittedVote(curVote => curVote + increment)
+
         setComments(comments => {
             return comments.map(comment => {
                 if (comment.comment_id === comment_id) {
@@ -16,7 +58,11 @@ const Votes = ({ votes, setComments, setArticle, author, forceNoButtons, comment
             })
         })
         patchCommentVotesById(comment_id, increment)
-            .catch(() => { // TODO maybe make the arrow go red for a second somehow
+            .catch(() => {
+                styleFail(increment)
+
+                setSubmittedVote(curVote => curVote - increment)
+
                 setComments(comments => {
                     return comments.map(comment => {
                         if (comment.comment_id === comment_id) {
@@ -25,15 +71,24 @@ const Votes = ({ votes, setComments, setArticle, author, forceNoButtons, comment
                         else return comment
                     })
                 })
+
             })
     }
 
     const handleArticleVote = (increment) => {
+        styleSuccess(increment)
+
+        setSubmittedVote(curVote => curVote + increment)
+
         setArticle(article => {
             return { ...article, votes: article.votes + increment }
         })
         patchArticleVotesById(article_id, increment)
-            .catch(() => { // TODO maybe make the arrow go red for a second somehow
+            .catch(() => {
+                styleFail(increment)
+
+                setSubmittedVote(curVote => curVote - increment)
+
                 setArticle(article => {
                     return { ...article, votes: article.votes - increment }
                 })
@@ -45,13 +100,21 @@ const Votes = ({ votes, setComments, setArticle, author, forceNoButtons, comment
         if (setArticle) return handleArticleVote(increment)
     }
 
-
     if (loggedInUser !== author && !forceNoButtons)
         return (
             <span>
-                <button className="vote-arrow" onClick={() => handleVote(+1)}>⇧</button>
+                <button style={upButtonStyle}
+                    className="vote-arrow"
+                    onClick={() => handleVote(+1)}
+                    disabled={submittedVote === 1}
+                >⇧</button>
                 <span>{votes}</span>
-                <button className="vote-arrow" onClick={() => handleVote(-1)}>⇩</button>
+                <button
+                    style={downButtonStyle}
+                    className="vote-arrow"
+                    onClick={() => handleVote(-1)}
+                    disabled={submittedVote === -1}
+                >⇩</button>
             </span>
         )
 

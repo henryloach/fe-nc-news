@@ -52,11 +52,11 @@ const Article = () => {
                 <div className="article-details">
                     <span>{topic}</span>
                     <span>{author}</span>
-                    <Votes votes={votes} setArticle={setArticle} author={author} article_id={article_id}/>
+                    <Votes votes={votes} setArticle={setArticle} author={author} article_id={article_id} />
                     {/* TODO comments.length changed dynamically 
                     on post/delete comments but it's
                     but it's the paginated comments not the total */}
-                    <span>comments: {comments.length} </span> 
+                    <span>comments: {comment_count} </span>
                     <span>{formattedDate}</span>
                 </div>
                 <p>{body}</p>
@@ -64,16 +64,21 @@ const Article = () => {
 
             <div className="comments">
                 <h3>Comments:</h3>
-                <button onClick={() => setShowCommentForm(state => !state)}> 
-                    {showCommentForm ? "Back" : "Post New Comment"} 
-                    </button>
-                {showCommentForm && <CommentForm setShowCommentForm={setShowCommentForm} setComments={setComments} article_id={article_id} />}
+                <button onClick={() => setShowCommentForm(state => !state)}>
+                    {showCommentForm ? "Back" : "Post New Comment"}
+                </button>
+                {showCommentForm && <CommentForm
+                    setShowCommentForm={setShowCommentForm}
+                    setComments={setComments}
+                    article_id={article_id}
+                    setArticle={setArticle}
+                />}
                 {!comments.length && <p>No comments to display...</p>}
                 <ul>
                     {comments.map(comment => {
                         return <li key={comment.comment_id}>
                             <hr />
-                            <Comment comment={comment} setComments={setComments} />
+                            <Comment comment={comment} setComments={setComments} setArticle={setArticle} />
                         </li>
                     })}
                 </ul>

@@ -1,7 +1,7 @@
 import Delete from "./Delete"
 import Votes from "./Votes"
 
-const Comment = ({ comment, setComments }) => {
+const Comment = ({ comment, setComments, setArticle }) => {
 
     const {
         comment_id,
@@ -29,6 +29,7 @@ const Comment = ({ comment, setComments }) => {
                     setComments={setComments}
                     author={author}
                     comment_id={comment_id}
+                    setArticle={setArticle}
                 />
                 <span>{formattedDate}</span>
             </div>
