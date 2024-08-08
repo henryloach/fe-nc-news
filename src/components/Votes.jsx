@@ -100,8 +100,6 @@ const Votes = ({ votes, setComments, setArticle, author, forceNoButtons, comment
         if (setArticle) return handleArticleVote(increment)
     }
 
-    console.log(submittedVote)
-
     if (loggedInUser !== author && !forceNoButtons)
         return (
             <span>
