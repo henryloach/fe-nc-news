@@ -1,4 +1,4 @@
-import useCreateResource from "../hooks/useCreateResource"
+import useAPI from "../hooks/useAPI"
 import {  useState } from "react"
 import { useParams } from "react-router-dom"
 import { getArticleById, getCommentsByArticleId } from "../api"
@@ -16,14 +16,14 @@ const Article = () => {
         setData: setArticle,
         isLoading: isArticleLoading,
         error: articleError
-    } = useCreateResource(() => getArticleById(article_id))
+    } = useAPI(() => getArticleById(article_id))
 
     const {
         data: comments,
         setData: setComments,
         isLoading: areCommentsLoading,
         error: commentsError
-    } = useCreateResource(() => getCommentsByArticleId(article_id))
+    } = useAPI(() => getCommentsByArticleId(article_id))
 
     // TODO refactor conditional rendering
     if (isArticleLoading) return <p>Loading...</p>

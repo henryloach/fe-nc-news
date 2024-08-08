@@ -17,7 +17,7 @@ const CommentForm = ({ setShowCommentForm, setComments, article_id }) => {
         postCommentByArticleId(article_id, { username, body })
             .then(newComment => {
                 setComments(comments => [newComment, ...comments])
-                commentText.current.value = ''
+                setCommentPostError(false)
             })
             .catch(err => {
                 setCommentPostError(true)

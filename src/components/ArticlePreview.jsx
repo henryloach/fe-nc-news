@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom"
-import { patchArticleVotesById } from "../api"
 import Votes from "./Votes"
 
 const ArticlePreview = ({ article, setArticles }) => {
@@ -14,28 +13,6 @@ const ArticlePreview = ({ article, setArticles }) => {
         article_img_url,
         comment_count
     } = article
-
-    const handleVote = (increment) => {
-        setArticles(articles => {
-            return articles.map(article => {
-                if (article.article_id === article_id) {
-                    return { ...article, votes: article.votes + increment }
-                }
-                else return article
-            })
-        })
-        patchArticleVotesById(article_id, increment)
-            .catch(() => { // TODO maybe make the arrow go red for a second somehow
-                setArticles(articles => {
-                    return articles.map(article => {
-                        if (article.article_id === article_id) {
-                            return { ...article, votes: article.votes - increment }
-                        }
-                        else return article
-                    })
-                })
-            })
-    }
 
     const formattedDate = new Date(created_at).toLocaleString()
 
