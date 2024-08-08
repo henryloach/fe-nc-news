@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-const useCreateResource = apiFunction => {
+const useAPI = (apiFunction, triggers=[]) => {
     const [data, setData] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)
@@ -17,9 +17,9 @@ const useCreateResource = apiFunction => {
             .finally(() => {
                 setIsLoading(false)
             })
-    }, [])
+    }, triggers)
 
     return { data, setData, isLoading, error }
 }
 
-export default useCreateResource
+export default useAPI

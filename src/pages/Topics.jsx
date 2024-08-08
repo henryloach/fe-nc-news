@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { getTopics } from "../api"
-import useCreateResource from "../hooks/useCreateResource"
+import useAPI from "../hooks/useAPI"
 
 const Topics = ({ setUrlQuery }) => {
     const {
@@ -8,7 +8,7 @@ const Topics = ({ setUrlQuery }) => {
         setData: setTopics,
         isLoading,
         error
-    } = useCreateResource(getTopics)
+    } = useAPI(getTopics)
 
     if (isLoading) return <p>Loading...</p>
     if (error) return <p>Error: {error.message}</p>

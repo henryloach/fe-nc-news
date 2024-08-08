@@ -13,12 +13,12 @@ function App() {
 
   return (
     <div className='App'>
-      <Header />
+      <Header setUrlQuery={setUrlQuery}/>
       <hr />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/topics" element={<Topics setUrlQuery={setUrlQuery}/>} />
-        <Route path="/articles" element={<Articles urlQuery={urlQuery}/>} />
+        <Route path="/articles" element={<Articles urlQuery={urlQuery} setUrlQuery={setUrlQuery}/>} />
         <Route path="/articles/:article_id" element={<Article />}/>
       </Routes>
     </div>

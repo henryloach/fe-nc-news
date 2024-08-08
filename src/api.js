@@ -24,6 +24,13 @@ export const getTopics = () => {
         })
 }
 
+export const getUsers = () => {
+    return apiClient.get("/users")
+    .then(response => {
+        return response.data.users
+    })
+}
+
 export const getArticleById = article_id => {
     return apiClient.get(`/articles/${article_id}`)
         .then(response => {
@@ -63,7 +70,6 @@ export const patchArticleVotesById = (article_id, increment) => {
 export const postCommentByArticleId = (article_id, requestBody) => {
     return apiClient.post(`/articles/${article_id}/comments`, requestBody)
         .then(response => {
-            // TODO - backend API file example res. don't have the newComment key 
             return response.data.newComment
         })
 }
