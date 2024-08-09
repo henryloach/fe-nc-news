@@ -102,13 +102,13 @@ const Votes = ({ votes, setComments, setArticle, author, forceNoButtons, comment
 
     if (loggedInUser !== author && !forceNoButtons)
         return (
-            <span>
+            <span className="vote-container">
                 <button style={upButtonStyle}
                     className="vote-arrow"
                     onClick={() => handleVote(+1)}
                     disabled={submittedVote === 1}
                 >⇧</button>
-                <span>{votes}</span>
+                <span className="vote-count">{votes}</span>
                 <button
                     style={downButtonStyle}
                     className="vote-arrow"
@@ -120,7 +120,8 @@ const Votes = ({ votes, setComments, setArticle, author, forceNoButtons, comment
 
     else
         return (
-            <span>
+            <span className="vote-container-no-buttons">
+                <span>votes</span>
                 <span>{votes}</span>
             </span>
         )

@@ -48,9 +48,9 @@ const QueryForm = ({ setUrlQuery }) => {
     }
 
     if (areTopicsLoading) return <p>Loading...</p>
-    if (topicsError) return <p>Error: {error.message}</p>
+    if (topicsError) return <p>Error: {topicsError.message}</p>
     if (areAuthorsLoading) return <p>Loading...</p>
-    if (authorsError) return <p>Error: {error.message}</p>
+    if (authorsError) return <p>Error: {authorsError.message}</p>
 
     return (
         <form ref={formRef} onSubmit={handleSubmit}>
@@ -59,6 +59,7 @@ const QueryForm = ({ setUrlQuery }) => {
                     <option value="created_at">date added</option>
                     <option value="votes">votes</option>
                     <option value="title">title</option>
+                    <option value="comment_count">comments</option>
                 </select>
             </label>
 
@@ -69,7 +70,7 @@ const QueryForm = ({ setUrlQuery }) => {
                 <input type="radio" id="descending" name="order" value="desc" defaultChecked /> Descending
             </label>
 
-            <label htmlFor="topic"> topic
+            <label htmlFor="topic"> topic: 
                 <select name="topic" id="topic">
                     <option value="any">Any</option>
                     {topics.map(topic => {
@@ -83,7 +84,7 @@ const QueryForm = ({ setUrlQuery }) => {
                 </select>
             </label>
 
-            <label htmlFor="author"> author
+            <label htmlFor="author"> author: 
                 <select name="author" id="author">
                     <option value="any">Any</option>
                     {authors.map(author => {

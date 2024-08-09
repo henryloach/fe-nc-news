@@ -19,13 +19,25 @@ const ArticlePreview = ({ article, setArticles }) => {
     return (
         <div className="article-preview">
             <h3><Link to={`/articles/${article_id}`}>{title}</Link></h3>
-            <img src={article_img_url} alt="article-preview-image"/>
+            <img src={article_img_url} alt="article-preview-image" />
             <div className="article-details">
-                <span>{topic}</span>
-                <span>{author}</span>
-                <Votes votes={votes} forceNoButtons={true}/>
-                <span>comments: {comment_count}</span>
-                <span>{formattedDate}</span>
+                <span className="article-details__topic">
+                    <span>topic</span>
+                    <span>{topic}</span>
+                </span>
+                <span className="article-details__author">
+                    <span>author</span>
+                    <span>{author}</span>
+                </span>
+                <span className="article-details__comments">
+                    <span>comments</span>
+                    <span>{comment_count}</span>
+                </span>
+                <Votes votes={votes} forceNoButtons={true} />
+                <span className="article-details__date">
+                    <span> Date</span>
+                    <span>{formattedDate}</span>
+                </span>
             </div>
         </div>
     )

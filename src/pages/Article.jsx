@@ -1,5 +1,5 @@
 import useAPI from "../hooks/useAPI"
-import {  useState } from "react"
+import { useState } from "react"
 import { useParams } from "react-router-dom"
 import { getArticleById, getCommentsByArticleId } from "../api"
 import Comment from "../components/Comment"
@@ -46,21 +46,30 @@ const Article = () => {
 
     return (
         <div>
-            <div>
+            <article>
                 <img src={article_img_url} alt="article-image" />
                 <h2>{title}</h2>
+                <p className="article-text">{body}</p>
                 <div className="article-details">
-                    <span>{topic}</span>
-                    <span>{author}</span>
+                    <span className="article-details__topic">
+                        <span>topic</span>
+                        <span>{topic}</span>
+                    </span>
+                    <span className="article-details__author">
+                        <span>author</span>
+                        <span>{author}</span>
+                    </span>
+                    <span className="article-details__comments">
+                        <span>comments</span>
+                        <span>{comment_count}</span>
+                    </span>
                     <Votes votes={votes} setArticle={setArticle} author={author} article_id={article_id} />
-                    {/* TODO comments.length changed dynamically 
-                    on post/delete comments but it's
-                    but it's the paginated comments not the total */}
-                    <span>comments: {comment_count} </span>
-                    <span>{formattedDate}</span>
+                    <span className="article-details__date">
+                        <span> Date</span>
+                        <span>{formattedDate}</span>
+                    </span>
                 </div>
-                <p>{body}</p>
-            </div>
+            </article>
 
             <div className="comments">
                 <h3>Comments:</h3>

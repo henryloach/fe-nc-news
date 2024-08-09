@@ -15,9 +15,12 @@ const Comment = ({ comment, setComments, setArticle }) => {
 
     return (
         <>
-            <p>{body}</p>
+            <p className="comment-text">{body}</p>
             <div className="comment-details">
-                <span>{author}</span>
+                <span className="article-details__author">
+                    <span>author</span>
+                    <span>{author}</span>
+                </span>
                 <Votes
                     votes={votes}
                     setComments={setComments}
@@ -31,7 +34,10 @@ const Comment = ({ comment, setComments, setArticle }) => {
                     comment_id={comment_id}
                     setArticle={setArticle}
                 />
-                <span>{formattedDate}</span>
+                <span className="article-details__date">
+                    <span> Date</span>
+                    <span>{formattedDate}</span>
+                </span>
             </div>
         </>
     )

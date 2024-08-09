@@ -26,7 +26,7 @@ const Delete = ({ setComments, author, comment_id, comment, setArticle }) => {
 
     if (loggedInUser === author)
         return (
-            <span>
+            <span className="delete-container">
                 <button onClick={() => handleDelete(comment_id)}>Delete</button>
             </span>
         )

@@ -5,7 +5,7 @@ const apiClient = axios.create({
     timeout: 1000
 })
 
-export const getArticles = (urlQuery) => {
+export const getArticles = (urlQuery = {}) => {
     const queryString =
         Object.entries(urlQuery)
             .map(([field, value]) => `${field}=${value}`)
@@ -38,8 +38,13 @@ export const getArticleById = article_id => {
         })
 }
 
-export const getCommentsByArticleId = article_id => {
-    return apiClient.get(`/articles/${article_id}/comments`)
+export const getCommentsByArticleId = (article_id, urlQuery = {}) => {
+    const queryString =
+        Object.entries(urlQuery)
+            .map(([field, value]) => `${field}=${value}`)
+            .join('&')
+
+    return apiClient.get(`/articles/${article_id}/comments?${queryString}`)
         .then(response => {
             return response.data.comments
         })
