@@ -8,9 +8,7 @@ const useAPI = (apiFunction, triggers=[], loadMore = false) => {
     useEffect(() => {
         apiFunction()
             .then(response => {
-                
                 if (loadMore && data) {
-                    console.log(response);
                     setData(curr => [...curr, ...response])
                 } else {
                     setData(response)

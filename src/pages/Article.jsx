@@ -1,5 +1,5 @@
 import useAPI from "../hooks/useAPI"
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useParams } from "react-router-dom"
 import { getArticleById, getCommentsByArticleId } from "../api"
 import Comment from "../components/Comment"
@@ -9,6 +9,7 @@ import CommentForm from "../components/CommentForm"
 const Article = () => {
     const { article_id } = useParams()
     const [offset, setOffset] = useState(0)
+    const [allowLoadMore, setAllowLoadMore] = useState(true)
 
     const [showCommentForm, setShowCommentForm] = useState(false)
 
@@ -29,6 +30,37 @@ const Article = () => {
         , [offset]
         , true
     )
+
+    const debounceTimeout = useRef(null)
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const {
+                scrollTop,
+                clientHeight,
+                scrollHeight
+            } = document.documentElement
+
+            const distanceFromBot = scrollHeight - scrollTop - clientHeight
+
+            if (distanceFromBot < 50 && comments.length < article.comment_count && allowLoadMore) {
+                clearTimeout(debounceTimeout.current)
+
+                setAllowLoadMore(false)
+
+                debounceTimeout.current = setTimeout(() => {
+                    setOffset(cur => cur + 10)
+                    setAllowLoadMore(true)
+                }, 150)
+            }
+
+
+        }
+
+        window.addEventListener("scroll", handleScroll)
+
+        return () => window.removeEventListener("scroll", handleScroll)
+    }, [comments, article])
 
     // TODO refactor conditional rendering
     if (isArticleLoading) return <p>Loading...</p>
@@ -97,7 +129,6 @@ const Article = () => {
                     })}
                 </ul>
             </div>
-            <button onClick={() => setOffset(cur => cur + 10)}> Load More {offset}</button>
         </div>
     )
 }

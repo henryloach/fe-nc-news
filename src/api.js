@@ -7,21 +7,33 @@ const apiClient = axios.create({
 
 export const getArticles = (urlQuery = {}) => {
     const queryString =
-        Object.entries(urlQuery)
-            .map(([field, value]) => `${field}=${value}`)
-            .join('&')
-
+    Object.entries(urlQuery)
+    .map(([field, value]) => `${field}=${value}`)
+    .join('&')
+    
     return apiClient.get(`/articles?${queryString}`)
-        .then(response => {
-            return response.data.articles
-        })
+    .then(response => {
+        return response.data.articles
+    })
+}
+
+export const getNumArticles = (urlQuery = {}) => {
+    const queryString =
+    Object.entries(urlQuery)
+    .map(([field, value]) => `${field}=${value}`)
+    .join('&')
+    
+    return apiClient.get(`/articles?${queryString}`)
+    .then(response => {
+        return response.data.total_count
+    })
 }
 
 export const getTopics = () => {
     return apiClient.get("/topics")
-        .then(response => {
-            return response.data.topics
-        })
+    .then(response => {
+        return response.data.topics
+    })
 }
 
 export const getUsers = () => {
@@ -33,9 +45,9 @@ export const getUsers = () => {
 
 export const getArticleById = article_id => {
     return apiClient.get(`/articles/${article_id}`)
-        .then(response => {
-            return response.data.article
-        })
+    .then(response => {
+        return response.data.article
+    })
 }
 
 export const getCommentsByArticleId = (article_id, urlQuery = {}) => {

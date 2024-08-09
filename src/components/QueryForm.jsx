@@ -70,7 +70,7 @@ const QueryForm = ({ setUrlQuery }) => {
                 <input type="radio" id="descending" name="order" value="desc" defaultChecked /> Descending
             </label>
 
-            <label htmlFor="topic"> topic: 
+            <label htmlFor="topic"> topic:
                 <select name="topic" id="topic">
                     <option value="any">Any</option>
                     {topics.map(topic => {
