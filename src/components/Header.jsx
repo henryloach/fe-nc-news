@@ -14,7 +14,7 @@ const Header = ({setUrlQuery}) => {
                         Articles
                     </Link></li>
                     <li>Login</li>
-                    <li>Sign Up</li>
+                    <li>Sign&nbsp;Up</li>
                 </ul>
             </nav>
         </header>

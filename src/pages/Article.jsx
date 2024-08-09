@@ -43,7 +43,7 @@ const Article = () => {
 
             const distanceFromBot = scrollHeight - scrollTop - clientHeight
 
-            if (distanceFromBot < 50 && comments.length < article.comment_count && allowLoadMore) {
+            if (distanceFromBot < 150 && comments.length < article.comment_count && allowLoadMore) {
                 clearTimeout(debounceTimeout.current)
 
                 setAllowLoadMore(false)
@@ -53,13 +53,16 @@ const Article = () => {
                     setAllowLoadMore(true)
                 }, 150)
             }
-
-
         }
 
         window.addEventListener("scroll", handleScroll)
+        window.addEventListener("touchmove", handleScroll)
 
-        return () => window.removeEventListener("scroll", handleScroll)
+        return () => {
+            window.removeEventListener("scroll", handleScroll)
+            window.removeEventListener("touchmove", handleScroll)
+        }
+
     }, [comments, article])
 
     // TODO refactor conditional rendering

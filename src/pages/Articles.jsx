@@ -60,8 +60,13 @@ const Articles = ({ urlQuery, setUrlQuery }) => {
         }
 
         window.addEventListener("scroll", handleScroll)
+        window.addEventListener("touchmove", handleScroll)
 
-        return () => window.removeEventListener("scroll", handleScroll)
+        return () => {
+            window.removeEventListener("scroll", handleScroll)
+            window.removeEventListener("touchmove", handleScroll)
+        }
+        
     }, [articles])
 
     if (isLoading) return <p>Loading...</p>
@@ -73,7 +78,7 @@ const Articles = ({ urlQuery, setUrlQuery }) => {
         <div className="article-page">
             <QueryForm setUrlQuery={setUrlQuery} />
             <h2>Articles</h2>
-            <p>Total: {numArticles}</p>
+            <p>Total Results: {numArticles}</p>
             {articles.length === 0 && <p>No articles found...</p>}
             <ul>
                 {articles.map(article => {
