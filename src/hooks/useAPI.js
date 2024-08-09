@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-const useAPI = (apiFunction, triggers=[]) => {
+const useAPI = (apiFunction, triggers=[], loadMore = false) => {
     const [data, setData] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)
@@ -8,7 +8,13 @@ const useAPI = (apiFunction, triggers=[]) => {
     useEffect(() => {
         apiFunction()
             .then(response => {
-                setData(response)
+                
+                if (loadMore && data) {
+                    console.log(response);
+                    setData(curr => [...curr, ...response])
+                } else {
+                    setData(response)
+                }
             })
             .catch(err => {
                 if (err.response) setError(err.response.data)

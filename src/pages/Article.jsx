@@ -8,6 +8,7 @@ import CommentForm from "../components/CommentForm"
 
 const Article = () => {
     const { article_id } = useParams()
+    const [offset, setOffset] = useState(0)
 
     const [showCommentForm, setShowCommentForm] = useState(false)
 
@@ -23,7 +24,11 @@ const Article = () => {
         setData: setComments,
         isLoading: areCommentsLoading,
         error: commentsError
-    } = useAPI(() => getCommentsByArticleId(article_id))
+    } = useAPI(
+        () => getCommentsByArticleId(article_id, { p: offset })
+        , [offset]
+        , true
+    )
 
     // TODO refactor conditional rendering
     if (isArticleLoading) return <p>Loading...</p>
@@ -92,6 +97,7 @@ const Article = () => {
                     })}
                 </ul>
             </div>
+            <button onClick={() => setOffset(cur => cur + 10)}> Load More {offset}</button>
         </div>
     )
 }
