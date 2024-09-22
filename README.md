@@ -2,7 +2,7 @@
 
 ## About
 
-This project is a the react front end of a full-stack news-article application demonstrating technologies and skills learnt during the Northcoders software engineering bootcamp.
+This project is the react front end of a full-stack news-article application demonstrating technologies and skills learnt during the Northcoders software engineering bootcamp.
 
 ## Deployed version
 
